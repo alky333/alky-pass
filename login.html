@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Pass Keep</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #121212;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .login-box {
+      z-index: 1;
+      background: rgba(0, 0, 0, 0.35);
+      color: #ffffff;
+      border: 1px solid rgba(0, 255, 0, 0.1);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border-radius: 14px;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.1);
+      padding: 2rem;
+      width: 100%;
+      max-width: 400px;
+      animation: fadeSlideIn 0.8s ease-out;
+    }
+
+    .form-control {
+      background: rgba(0, 0, 0, 0.35);
+      color: #ffffff;
+      border: 1px solid rgba(0, 255, 0, 0.1);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border-radius: 14px;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: #0f0;
+      box-shadow: 0 0 40px rgba(0, 255, 0, 0.2);
+      background: rgba(0, 0, 0, 0.45);
+      transform: scale(1.02);
+    }
+
+    .btn-login {
+      background: transparent;
+      color: #15a8ab;
+      border: 1px solid #15a8ab;
+      transition: all 0.3s ease;
+      border-radius: 14px;
+      padding: 0.5rem 2rem;
+    }
+
+    .btn-login:hover {
+      background-color: #15a8ab;
+      color: black;
+      box-shadow: 0 0 40px rgba(0, 255, 0, 0.3);
+      transform: scale(1.02);
+    }
+
+    h4 {
+      color: #0f0;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    label {
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .matrix-effect {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .matrix-line {
+      position: absolute;
+      top: -100%;
+      width: 2px;
+      height: 200%;
+      background: linear-gradient(to bottom, #0f0, transparent);
+      opacity: 0.2;
+      animation: matrix-fall 3s linear infinite;
+    }
+
+    @keyframes matrix-fall {
+      0% {
+        top: -100%;
+        opacity: 0.2;
+      }
+      50% {
+        opacity: 0.6;
+      }
+      100% {
+        top: 100%;
+        opacity: 0;
+      }
+    }
+
+    .dynamic-mouse-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(0, 255, 0, 0.1), transparent 40%);
+      transition: background-position 0.1s;
+      z-index: 0;
+      filter: blur(60px);
+    }
+
+    .glitch {
+      color: #0f0;
+      position: relative;
+      font-size: 2rem;
+      font-family: 'Courier New', monospace;
+      text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+      animation: subtle-glitch 4s infinite;
+    }
+
+    @keyframes subtle-glitch {
+      0% {
+        text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+      }
+      2% {
+        text-shadow: -2px 0 #0f0, 2px 0 #0f0;
+      }
+      4% {
+        text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+      }
+      50% {
+        text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+      }
+      52% {
+        text-shadow: -1px 0 #0f0, 1px 0 #0f0;
+      }
+      54% {
+        text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+      }
+      100% {
+        text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+      }
+    }
+
+    .glitch::before,
+    .glitch::after {
+      display: none;
+    }
+
+    /* Estilo para el texto resaltado en los resultados de búsqueda */
+    .highlight {
+      background-color: rgba(0, 255, 0, 0.2);
+      border-radius: 3px;
+      padding: 0 2px;
+      color: #0f0;
+    }
+
+    /* Animación mejorada para las tarjetas */
+    .card-animated {
+      animation: fadeInUp 0.3s ease-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Mejorar la apariencia del input de búsqueda */
+    #searchInput {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(0, 255, 0, 0.1);
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    #searchInput:focus {
+      background: rgba(0, 0, 0, 0.3);
+      border-color: rgba(0, 255, 0, 0.3);
+      box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);
+    }
+
+    #searchInput::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Estilos para el campo de usuario y los botones de copiar */
+    .user-field {
+      display: flex;
+      align-items: center;
+    }
+
+    .btn-copy-user,
+    .btn-copy {
+      padding: 0.25rem 0.5rem;
+      margin-left: 0.5rem;
+      transition: all 0.3s ease;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    .btn-copy-user:hover,
+    .btn-copy:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: scale(1.1);
+    }
+
+    .copy-success {
+      background-color: rgba(0, 255, 0, 0.2) !important;
+      color: #0f0 !important;
+    }
+
+    /* Ajuste del espaciado */
+    .user-field,
+    .password-field {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Mejorar la apariencia de los botones */
+    .btn-outline-light {
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-outline-light:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* Ajuste del espaciado */
+    .password-field,
+    .d-flex {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .password-input {
+      flex: 1;
+    }
+
+    .btn-outline-light {
+      margin: 0 2px;
+    }
+
+    /* Ajuste para el contenedor de usuario */
+    .d-flex.align-items-center {
+      gap: 0.5rem;
+    }
+  </style>
+</head>
+<body class="d-flex justify-content-center align-items-center">
+  <div class="dynamic-mouse-bg" id="mouseReactiveBg"></div>
+  <div class="matrix-effect" id="matrixEffect"></div>
+
+  <form action="api/login.php" method="POST" class="login-box">
+    <h4 class="glitch" data-text="Pass Keep">🔐 Pass Keep</h4>
+    <div class="mb-4">
+      <label for="usuario">Usuario</label>
+      <input type="text" name="usuario" id="usuario" class="form-control" required>
+    </div>
+    <div class="mb-4">
+      <label for="contrasena">Contraseña</label>
+      <input type="password" name="contrasena" id="contrasena" class="form-control" required>
+    </div>
+    <div class="search-container">
+      <input 
+        class="form-control" 
+        id="searchInput" 
+        type="search" 
+        placeholder="Escribe para buscar..." 
+        autocomplete="off"
+        aria-label="Search">
+    </div>
+    <button type="submit" class="btn btn-login w-100 mb-3">Entrar</button>
+    <div class="text-center">
+      <a href="register.html" class="text-info">¿No tienes cuenta? Regístrate</a>
+    </div>
+  </form>
+
+  <!-- Scripts -->
+  <script>
+    // Efecto Matrix
+    document.addEventListener("DOMContentLoaded", () => {
+      const container = document.getElementById("matrixEffect");
+      const lines = 50;
+
+      for (let i = 0; i < lines; i++) {
+        const line = document.createElement("div");
+        line.classList.add("matrix-line");
+        line.style.left = `${Math.random() * 100}%`;
+        line.style.animationDelay = `${Math.random() * 3}s`;
+        line.style.animationDuration = `${2 + Math.random() * 3}s`;
+        container.appendChild(line);
+      }
+    });
+
+    // Efecto de fondo que sigue al mouse
+    document.addEventListener('mousemove', (e) => {
+      const mouseReactiveBg = document.getElementById('mouseReactiveBg');
+      if (mouseReactiveBg) {
+        const x = (e.clientX / window.innerWidth) * 100;
+        const y = (e.clientY / window.innerHeight) * 100;
+        mouseReactiveBg.style.setProperty('--x', `${x}%`);
+        mouseReactiveBg.style.setProperty('--y', `${y}%`);
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("searchInput");
+        let timeoutId;
+
+        // Función de búsqueda mejorada
+        function performSearch(searchTerm) {
+            fetch("api/get_all.php")
+                .then(res => res.json())
+                .then(data => {
+                    const filtered = data.filter(item => {
+                        const searchLower = searchTerm.toLowerCase();
+                        const platformMatch = item.plataforma.toLowerCase().includes(searchLower);
+                        const userMatch = item.usuario.toLowerCase().includes(searchLower);
+                        
+                        // Busca coincidencias parciales en cualquier parte del texto
+                        return platformMatch || userMatch;
+                    });
+
+                    // Actualizar la UI con los resultados filtrados
+                    updatePasswordList(filtered, searchTerm);
+                });
+        }
+
+        // Función para actualizar la UI con los resultados
+        function updatePasswordList(items, searchTerm = '') {
+            const list = document.getElementById("passwordList");
+            list.innerHTML = ""; // Limpiar lista actual
+
+            if (items.length === 0) {
+                // Mostrar mensaje si no hay resultados
+                list.innerHTML = `
+                    <div class="text-center text-muted mt-4">
+                        <p>No se encontraron resultados</p>
+                    </div>
+                `;
+                return;
+            }
+
+            items.forEach((p, index) => {
+                const card = document.createElement("div");
+                card.className = "card p-3 password-card card-animated";
+                card.style.animationDelay = `${index * 50}ms`;
+
+                const passwordId = `pwd-${p.id}`;
+                card.innerHTML = `
+                    <h5>${p.plataforma}</h5>
+                    <div class="mb-2">
+                        <div class="d-flex align-items-center">
+                            <strong>Usuario:</strong> 
+                            <span class="mx-2">${p.usuario}</span>
+                            <button class="btn btn-outline-light btn-sm" onclick="copyToClipboard('${p.usuario}')">📋</button>
+                        </div>
+                    </div>
+                    <div class="password-field mb-2">
+                        <input type="password" id="${passwordId}" class="form-control form-control-sm password-input" value="${p.contrasena}" readonly>
+                        <button class="btn btn-outline-light btn-sm btn-toggle">👁️</button>
+                        <button class="btn btn-outline-light btn-sm btn-copy">📋</button>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-outline-custom btn-sm btn-edit mr-1 flex-fill">✏️ Editar</button>
+                        <button class="btn btn-outline-danger btn-sm btn-delete flex-fill">🗑️ Eliminar</button>
+                    </div>
+                `;
+
+                // Configurar los event listeners
+                setupCardEventListeners(card, p, passwordId);
+                list.appendChild(card);
+            });
+        }
+
+        // Función para resaltar el texto buscado
+        function highlightText(text, searchTerm) {
+            if (!searchTerm) return text;
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        // Event listener para la búsqueda en tiempo real
+        searchInput.addEventListener("input", (e) => {
+            // Limpiar el timeout anterior
+            clearTimeout(timeoutId);
+            
+            // Establecer un nuevo timeout (debounce)
+            timeoutId = setTimeout(() => {
+                performSearch(e.target.value);
+            }, 300); // Esperar 300ms después de que el usuario deje de escribir
+        });
+
+        // Función actualizada para configurar los event listeners
+        function setupCardEventListeners(card, p, passwordId) {
+            // Event listener para copiar usuario
+            card.querySelector(".btn-copy-user").addEventListener("click", () => {
+                copyToClipboard(p.usuario);
+                showCopyFeedback(card.querySelector(".btn-copy-user"));
+            });
+
+            // Event listener para copiar contraseña
+            card.querySelector(".btn-copy").addEventListener("click", () => {
+                copyToClipboard(p.contrasena);
+                showCopyFeedback(card.querySelector(".btn-copy"));
+            });
+
+            // Demás event listeners existentes
+            card.querySelector(".btn-toggle").addEventListener("click", () =>
+                toggleVisibility(passwordId, card.querySelector(".btn-toggle"))
+            );
+            card.querySelector(".btn-edit").addEventListener("click", () =>
+                editPassword(p.id, p.plataforma, p.usuario, p.contrasena)
+            );
+            card.querySelector(".btn-delete").addEventListener("click", () =>
+                deletePassword(p.id)
+            );
+        }
+
+        // Función para mostrar feedback visual al copiar
+        function showCopyFeedback(button) {
+            const originalText = button.innerHTML;
+            button.innerHTML = '✓';
+            button.classList.add('copy-success');
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.classList.remove('copy-success');
+            }, 1000);
+        }
+
+        // Función mejorada para copiar al portapapeles
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    // Copiado exitoso
+                })
+                .catch(err => {
+                    console.error('Error al copiar: ', err);
+                    // Fallback para navegadores más antiguos
+                    const textArea = document.createElement("textarea");
+                    textArea.value = text;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    try {
+                        document.execCommand('copy');
+                    } catch (e) {
+                        console.error('Fallback: Error al copiar al portapapeles', e);
+                    }
+                    document.body.removeChild(textArea);
+                });
+        }
+    });
+  </script>
+</body>
+</html>
