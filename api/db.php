@@ -1,8 +1,13 @@
 <?php
-$host = "localhost";
-$dbname = "alky_db";
-$username = "root";
-$password = ""; // sin contraseña por defecto en XAMPP
+/**
+ * Este archivo contiene la configuración de la base de datos.
+ * Los datos de conexión (host, dbname, username, password)
+ * deben ser actualizados cuando el proyecto sea subido a un host.
+ */
+$host = " sql311.infinityfree.com";
+$dbname = "if0_38827235_keeper_db";
+$username = "if0_38827235";
+$password = "084086191"; // sin contraseña por defecto en XAMPP
 
 try {
     $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
