@@ -1,18 +1,16 @@
+
 <?php
-/**
- * Este archivo contiene la configuración de la base de datos.
- * Los datos de conexión (host, dbname, username, password)
- * deben ser actualizados cuando el proyecto sea subido a un host.
- */
-$host = " sql311.infinityfree.com";
-$dbname = "if0_38827235_keeper_db";
-$username = "if0_38827235";
-$password = "084086191"; // sin contraseña por defecto en XAMPP
+// db.php
+$host = 'sql311.infinityfree.com';
+$dbname = 'if0_38827235_keeper_db';
+$username = 'if0_38827235';
+$password = '084086191';
 
 try {
-    $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-    die("Connection failed: " . $e->getMessage());
+    die("🔴 Error de conexión a la base de datos: " . $e->getMessage());
 }
 ?>
